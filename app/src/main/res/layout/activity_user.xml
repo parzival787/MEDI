@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F7FA"
+    tools:context=".UserActivity">
+
+    <!-- App Bar with elevated design -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        app:elevation="4dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/white"
+            app:title="MediCare"
+            app:titleCentered="true"
+            app:titleTextAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+            app:titleTextColor="#1565C0"
+            app:menu="@menu/user_menu" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Main Content -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="100dp">
+
+            <!-- Header Section -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="#FFFFFF">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="24dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="28dp">
+
+                    <!-- Welcome Text -->
+                    <TextView
+                        android:id="@+id/tv_welcome_user"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hello, John Doe!"
+                        android:textColor="#1A237E"
+                        android:textSize="28sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.01"
+                        tools:text="Hello, John Doe!" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="24dp"
+                        android:text="Your health partner is here."
+                        android:textColor="#546E7A"
+                        android:textSize="16sp" />
+
+                    <!-- Search Bar -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/search_input_layout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxBackgroundColor="#F8F9FA"
+                        app:boxCornerRadiusBottomEnd="16dp"
+                        app:boxCornerRadiusBottomStart="16dp"
+                        app:boxCornerRadiusTopEnd="16dp"
+                        app:boxCornerRadiusTopStart="16dp"
+                        app:boxStrokeColor="#1565C0"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:hintEnabled="false"
+                        app:startIconDrawable="@drawable/ic_search"
+                        app:startIconTint="#1565C0"
+                        app:endIconMode="custom"
+                        app:endIconDrawable="@android:drawable/ic_menu_search"
+                        app:endIconTint="#1565C0"
+                        app:endIconContentDescription="Search">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_search"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Search for medicines..."
+                            android:textColorHint="#78909C"
+                            android:textColor="#263238"
+                            android:paddingVertical="16dp"
+                            android:imeOptions="actionSearch"
+                            android:inputType="text"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Action Cards Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:paddingTop="24dp">
+
+                <!-- Upload Prescription Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_upload_prescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:cardBackgroundColor="#E3F2FD"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="3dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp">
+
+                        <!-- Icon Container -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/icon_container_prescription"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            app:cardCornerRadius="28dp"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="#BBDEFB"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:id="@+id/iv_prescription_icon"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_prescription_upload"
+                                app:tint="#01579B"
+                                android:contentDescription="Upload Prescription" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <TextView
+                            android:id="@+id/tv_card_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Upload Prescription"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="#0D47A1"
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintStart_toEndOf="@id/icon_container_prescription"
+                            app:layout_constraintTop_toTopOf="@id/icon_container_prescription"
+                            app:layout_constraintEnd_toStartOf="@id/iv_arrow"/>
+
+                        <TextView
+                            android:id="@+id/tv_card_subtitle_prescription"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Order medicines quickly with a photo"
+                            android:textSize="14sp"
+                            android:textColor="#546E7A"
+                            app:layout_constraintStart_toStartOf="@id/tv_card_title"
+                            app:layout_constraintTop_toBottomOf="@id/tv_card_title"
+                            app:layout_constraintEnd_toEndOf="@id/tv_card_title"/>
+
+                        <ImageView
+                            android:id="@+id/iv_arrow"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_arrow_forward"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:tint="#01579B"
+                            android:contentDescription="Navigate" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- My Orders Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_my_orders"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:cardBackgroundColor="#E3F2FD"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="3dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp">
+
+                        <!-- Icon Container -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/icon_container_orders"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            app:cardCornerRadius="28dp"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="#BBDEFB"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:id="@+id/iv_orders_icon"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_gravity="center"
+                                app:srcCompat="@android:drawable/ic_menu_today"
+                                app:tint="#01579B"
+                                android:contentDescription="My Orders" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <TextView
+                            android:id="@+id/tv_orders_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="My Orders"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="#0D47A1"
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintStart_toEndOf="@id/icon_container_orders"
+                            app:layout_constraintTop_toTopOf="@id/icon_container_orders"
+                            app:layout_constraintEnd_toStartOf="@id/iv_orders_arrow"/>
+
+                        <TextView
+                            android:id="@+id/tv_orders_subtitle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Check status and order history"
+                            android:textSize="14sp"
+                            android:textColor="#546E7A"
+                            app:layout_constraintStart_toStartOf="@id/tv_orders_title"
+                            app:layout_constraintTop_toBottomOf="@id/tv_orders_title"
+                            app:layout_constraintEnd_toEndOf="@id/tv_orders_title"/>
+
+                        <ImageView
+                            android:id="@+id/iv_orders_arrow"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_arrow_forward"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:tint="#01579B"
+                            android:contentDescription="Navigate" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Search Results Header -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Search Results"
+                        android:textColor="#1A237E"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_results_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:text="0 items"
+                        android:textSize="14sp"
+                        android:textColor="#546E7A"
+                        tools:visibility="visible"
+                        tools:text="5 items" />
+                </LinearLayout>
+
+                <!-- RecyclerView for Search Results -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_medicines"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:visibility="gone"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/list_item_medicine_search"
+                    tools:visibility="visible" />
+
+                <!-- Empty State -->
+                <LinearLayout
+                    android:id="@+id/empty_state_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="40dp"
+                    android:visibility="visible"
+                    tools:visibility="gone">
+
+                    <!-- Empty State Icon Container -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        app:cardCornerRadius="48dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="#ECEFF1"
+                        android:layout_marginBottom="20dp">
+
+                        <ImageView
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_empty_box"
+                            app:tint="#78909C"
+                            android:contentDescription="No results" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No search results yet"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#37474F"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Enter a medicine name and tap search"
+                        android:textAlignment="center"
+                        android:textSize="14sp"
+                        android:textColor="#78909C"
+                        android:lineSpacingExtra="4dp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Floating Action Button for Cart -->
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fab_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="24dp"
+        android:contentDescription="View Cart"
+        android:text="View Cart"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:elevation="6dp"
+        app:backgroundTint="#01579B"
+        app:icon="@drawable/ic_shopping_cart"
+        app:iconTint="@android:color/white" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bottom_sheet_bg"
+    android:padding="24dp">
+
+    <!-- Medicine Name -->
+    <TextView
+        android:id="@+id/tv_medicine_name_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/textColorPrimary"
+        tools:text="Paracetamol 500mg"/>
+
+    <!-- Pharmacist Name -->
+    <TextView
+        android:id="@+id/tv_pharmacist_name_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sold by: Loading..."
+        android:textSize="16sp"
+        android:textColor="#546E7A"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Description -->
+    <TextView
+        android:id="@+id/tv_description_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:textColor="#37474F"
+        tools:text="Used for pain relief and fever reduction. Standard dosage is 1-2 tablets every 4-6 hours."/>
+
+    <!-- Manufacturer -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Manufacturer:"
+            android:textStyle="bold"
+            android:textColor="#37474F"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_manufacturer_detail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:textColor="#546E7A"
+            tools:text="Generic Pharma Inc."/>
+    </LinearLayout>
+
+    <!-- Stock -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Available Stock:"
+            android:textStyle="bold"
+            android:textColor="#37474F"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_stock_detail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:textColor="#546E7A"
+            tools:text="42 units"/>
+    </LinearLayout>
+
+    <!-- Price and Add to Cart Button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical|bottom">
+
+        <TextView
+            android:id="@+id/tv_price_detail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#0D47A1"
+            tools:text="INR 5.99"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_add_to_cart_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add to Cart"
+            app:icon="@drawable/ic_shopping_cart"
+            android:backgroundTint="#438FC8"
+            android:textColor="@color/textColorPrimary"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
+
+    </LinearLayout>
+
+</LinearLayout>
+
+
+

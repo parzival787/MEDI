@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Color Palette -->
+    <color name="colorPrimary">#007BFF</color> <!-- A vibrant blue for primary actions -->
+    <color name="colorPrimaryDark">#0056b3</color> <!-- A darker shade for the status bar -->
+    <color name="colorPrimaryLight">#B3E5FC</color> <!-- A light shade for backgrounds -->
+
+    <!-- Accent Color for highlighting UI elements -->
+    <color name="colorAccent">#FFC107</color> <!-- A warm yellow for accents -->
+
+    <!-- Text Colors -->
+    <color name="textColorPrimary">#212121</color> <!-- For main text -->
+    <color name="textColorSecondary">#757575</color> <!-- For subheadings and secondary text -->
+    <color name="textColorWhite">#FFFFFF</color>
+
+    <!-- General UI Colors -->
+    <color name="windowBackground">#F5F5F5</color> <!-- A light grey for the main background -->
+    <color name="cardBackground">#FFFFFF</color> <!-- White for cards and dialogs -->
+    <color name="low_stock_warning">#FB8C00</color>
+</resources>
+

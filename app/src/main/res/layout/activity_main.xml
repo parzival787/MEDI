@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient_welcome"
+    tools:context=".MainActivity">
+
+    <!-- Main Content Container -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="32dp"
+            android:gravity="center_horizontal">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="60dp"/>
+
+            <!-- Logo Container with Modern Elevated Background -->
+            <FrameLayout
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_marginBottom="32dp"
+                android:background="@drawable/ic_launcher_background"
+                android:elevation="16dp"
+                android:outlineSpotShadowColor="#4D000000">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white"
+                    android:alpha="0.95"/>
+
+                <ImageView
+                    android:id="@+id/app_logo"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_launcher_foreground"
+                    android:scaleType="fitCenter"
+                    android:elevation="2dp"/>
+
+            </FrameLayout>
+
+            <!-- Title with Gradient Effect -->
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Welcome to Medi"
+                android:textSize="42sp"
+                android:textColor="#0277BD"
+                android:textStyle="bold"
+                android:letterSpacing="0.01"
+                android:shadowColor="#80E1F5FE"
+                android:shadowDx="0"
+                android:shadowDy="4"
+                android:shadowRadius="8"
+                android:layout_marginBottom="12dp"/>
+
+            <!-- Enhanced Tagline -->
+            <TextView
+                android:id="@+id/tv_tagline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="♥ Your Health, Delivered"
+                android:textSize="18sp"
+                android:textColor="#455A64"
+                android:letterSpacing="0.04"
+                android:alpha="0.9"
+                android:layout_marginBottom="56dp"/>
+
+            <!-- Modern Prompt Text -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CONTINUE AS A..."
+                android:textSize="12sp"
+                android:textColor="#607D8B"
+                android:letterSpacing="0.15"
+                android:textStyle="bold"
+                android:layout_marginBottom="28dp"/>
+
+            <!-- Enhanced Customer Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="12dp"
+                app:cardBackgroundColor="#FFFFFF"
+                android:clickable="true"
+                android:focusable="true"
+                app:rippleColor="#B3E5FC"
+                app:strokeWidth="0dp"
+                app:cardMaxElevation="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="28dp"
+                    android:gravity="center_vertical"
+                    android:background="@android:drawable/list_selector_background">
+
+                    <!-- Modern Icon Container -->
+                    <FrameLayout
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:background="@drawable/ic_launcher_background"
+                        android:elevation="4dp"
+                        android:outlineSpotShadowColor="#4D1E88E5">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#E3F2FD"
+                            android:alpha="0.8"/>
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_person_outline"
+                            app:tint="#1976D2" />
+
+                    </FrameLayout>
+
+                    <!-- Text Content -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="24dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Customer"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="#1565C0"
+                            android:letterSpacing="0.01"
+                            android:layout_marginBottom="6dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Browse and order medicines"
+                            android:textSize="12sp"
+                            android:textColor="#607D8B"
+                            android:alpha="0.85"/>
+
+                    </LinearLayout>
+
+                    <!-- Modern Arrow -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="→"
+                        android:textSize="32sp"
+                        android:textColor="#1976D2"
+                        android:alpha="0.6"
+                        android:layout_marginStart="12dp"/>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Enhanced Pharmacist Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_pharmacist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="12dp"
+                app:cardBackgroundColor="#FFFFFF"
+                android:clickable="true"
+                android:focusable="true"
+                app:rippleColor="#C8E6C9"
+                app:strokeWidth="0dp"
+                app:cardMaxElevation="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="28dp"
+                    android:gravity="center_vertical"
+                    android:background="@android:drawable/list_selector_background">
+
+                    <!-- Modern Icon Container -->
+                    <FrameLayout
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:background="@drawable/ic_launcher_background"
+                        android:elevation="4dp"
+                        android:outlineSpotShadowColor="#4D4CAF50">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#E8F5E9"
+                            android:alpha="0.8"/>
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_local_pharmacy"
+                            app:tint="#43A047" />
+
+                    </FrameLayout>
+
+                    <!-- Text Content -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="24dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Pharmacist"
+                            android:textSize="19sp"
+                            android:textStyle="bold"
+                            android:textColor="#388E3C"
+                            android:letterSpacing="0.01"
+                            android:layout_marginBottom="6dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Manage pharmacy and orders"
+                            android:textSize="13sp"
+                            android:textColor="#607D8B"
+                            android:alpha="0.85"/>
+
+                    </LinearLayout>
+
+                    <!-- Modern Arrow -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="→"
+                        android:textSize="32sp"
+                        android:textColor="#43A047"
+                        android:alpha="0.6"
+                        android:layout_marginStart="12dp"/>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="48dp"/>
+
+            <!-- Enhanced Bottom Text -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trusted by thousands of users"
+                android:textSize="13sp"
+                android:textColor="#78909C"
+                android:alpha="0.7"
+                android:letterSpacing="0.02"/>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="32dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
