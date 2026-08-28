@@ -41,7 +41,10 @@ graph TD
 *   **Data & Persistence Layer**:
     *   **Reactive Backend**: Uses **Cloud Firestore** for real-time data streaming (orders/inventory).
     *   **Blob Storage**: **Firebase Storage** manages high-resolution prescription images and medicine catalogs.
-    *   **State Management**: Implements the **Singleton Pattern** in `CartManager` to maintain a globally consistent state, preventing data loss during configuration changes (like screen rotation).
+    *   **State Management & Patterns**: 
+    *   **Singleton Pattern**: Implemented in `CartManager` to maintain a globally consistent state, preventing data loss during configuration changes (like screen rotation).
+    *   **Adapter Pattern**: Used extensively in `RecyclerViews` to decouple business logic from UI representation.
+    *   **POJO Modeling**: Strong type safety and data structure integrity through `Medicine`, `Order`, and `CartItem` models.
 
 ---
 
@@ -68,6 +71,7 @@ graph TD
 | **AI/ML** | ML Kit & Gemini | OCR for prescriptions and GenAI for medical context. |
 | **Payments** | Razorpay | End-to-end encrypted payment processing. |
 | **Security** | jBCrypt | Salted password hashing for pharmacist accounts. |
+| **Version Control** | Git | Managed via GitHub for collaborative development and CI/CD readiness. |
 | **Image Handling** | Glide | Efficient memory management and lazy-loading of thumbnails. |
 
 ---
