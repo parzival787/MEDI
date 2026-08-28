@@ -10,29 +10,52 @@
 
 ---
 
+## 🏗 System Architecture
+
+The **Medi** ecosystem is built on a high-availability, cloud-synced architecture designed for real-time healthcare management.
+
+### 1. Architectural Diagram (Logic Flow)
+```mermaid
+graph TD
+    A[User/Pharmacist Client] -->|Auth Request| B{Firebase Auth}
+    B -->|Success| C[MainActivity Router]
+    C -->|Role: Patient| D[Patient Dashboard]
+    C -->|Role: Pharmacist| E[Pharmacist Dashboard]
+    
+    D -->|Upload Prescription| F[ML Kit OCR Engine]
+    F -->|Regex Filtering| G[Firestore collectionGroup Search]
+    G -->|Results| H[Medicine Details + Gemini AI Insights]
+    
+    H -->|Add to Cart| I[Singleton CartManager]
+    I -->|Checkout| J[Razorpay Payment Gateway]
+    J -->|Verified| K[Firestore Orders Collection]
+    
+    K -->|Real-time Snapshot| E
+```
+
+### 2. Layered Breakdown
+*   **Presentation Layer**: Built with **Material Design 3** and **ViewBinding**. It utilizes a responsive Activity-based navigation system to ensure smooth transitions between complex tasks like OCR scanning and payment processing.
+*   **Intelligence Layer (AI/ML)**: 
+    *   **ML Kit Engine**: Handles edge-based text recognition to minimize latency.
+    *   **Gemini AI Bridge**: Provides Generative AI context for drug interactions, acting as a virtual pharmacist for patients.
+*   **Data & Persistence Layer**:
+    *   **Reactive Backend**: Uses **Cloud Firestore** for real-time data streaming (orders/inventory).
+    *   **Blob Storage**: **Firebase Storage** manages high-resolution prescription images and medicine catalogs.
+    *   **State Management**: Implements the **Singleton Pattern** in `CartManager` to maintain a globally consistent state, preventing data loss during configuration changes (like screen rotation).
+
+---
+
 ## 🔄 Technical Workflow & System Logic
 
-The application architecture is built on a **Modular Activity-based System** with a centralized Firebase event-driven backend.
-
-### 1. The Core Engine (Architecture)
-*   **Role-Based Separation**: The app implements a dual-interface logic. `MainActivity.java` acts as the primary traffic controller, routing intents based on user role selection (Customer vs. Pharmacist).
-*   **State Persistence**: Uses a **Singleton Pattern** in `CartManager.java` to maintain a globally accessible, thread-safe shopping cart state across different Activity lifecycles.
-
-### 2. Patient Procurement Workflow (The Code Logic)
+### 1. Patient Procurement Workflow
 1.  **Identity Verification**: `UserSignin.java` handles session persistence via Firebase Auth. Google One-Tap integration is implemented for low-friction onboarding.
-2.  **Smart Prescription Analysis (`Uploadprescription.java`)**:
-    *   **Capture**: Uses `ActivityResultLauncher` to interface with the system's media picker.
-    *   **AI OCR**: The image is processed via `Google ML Kit TextRecognizer`. Raw blocks of text are extracted into a string buffer.
-    *   **Heuristic Matching**: A Regex-based algorithm (`[a-zA-Z]{4,}`) filters the OCR output to identify drug names, which are then passed to a Firestore `collectionGroup` query to find matches across *all* pharmacy inventories simultaneously.
+2.  **Smart Prescription Analysis**: The image is processed via `Google ML Kit TextRecognizer`. Raw blocks of text are extracted, filtered via Regex (`[a-zA-Z]{4,}`), and queried against Firestore `collectionGroup` to find matches across all pharmacies simultaneously.
 3.  **GenAI Assistance**: Integrated with the **Google Gemini API**, providing a chatbot-like interface where patients can query drug interactions, side effects, and general health advice.
-4.  **Transaction Lifecycle (`PaymentActivity.java`)**:
-    *   Integrates **Razorpay SDK**. The workflow handles the `PaymentResultListener` callbacks.
-    *   Upon successful verification, the cart is flushed, and a new `Order` document is atomized into the Firestore `orders` collection.
+4.  **Transaction Lifecycle**: Integrates **Razorpay SDK**. The workflow handles the `PaymentResultListener` callbacks; upon success, the cart is flushed and a new `Order` document is atomized into the database.
 
-### 3. Supply Chain & Fulfillment (Pharmacist Logic)
+### 2. Supply Chain & Fulfillment (Pharmacist Logic)
 1.  **Inventory Management**: `addmedicine.java` handles binary data upload (images) to **Firebase Storage** and metadata (price, dosage) to **Firestore**.
 2.  **Real-Time Dashboard**: `OrdersReceivedActivity` uses a `SnapshotListener`. When a customer places an order, the pharmacist's UI updates instantly without requiring a refresh.
-3.  **Fulfillment Logic**: Updating the `status` field in a Firestore document triggers a real-time update in the customer's `MyOrdersActivity`, keeping the patient informed of their order's progress.
 
 ---
 
@@ -40,29 +63,20 @@ The application architecture is built on a **Modular Activity-based System** wit
 
 | Component | Technology | Implementation Detail |
 | :--- | :--- | :--- |
-| **Language** | Java 11 | Utilizes modern Java features like Lambda expressions and `Stream` APIs for data processing. |
-| **Backend** | Firebase | **Firestore**: NoSQL Real-time DB. **Auth**: Identity Management. **Storage**: Image BLOB storage. |
-| **AI/ML** | ML Kit & Gemini | **ML Kit**: Text-to-Data conversion. **Gemini**: Generative conversational AI for health insights. |
-| **Payments** | Razorpay | End-to-end encrypted payment processing with success/failure callback handling. |
-| **Security** | jBCrypt | Salted password hashing for pharmacist accounts to prevent rainbow table attacks. |
-| **Image Handling** | Glide | Used for efficient memory management and lazy-loading of medicine thumbnails. |
+| **Language** | Java 11 | Utilizes modern Java features like Lambda expressions and Stream APIs. |
+| **Backend** | Firebase | Firestore (DB), Auth (Identity), Storage (Images). |
+| **AI/ML** | ML Kit & Gemini | OCR for prescriptions and GenAI for medical context. |
+| **Payments** | Razorpay | End-to-end encrypted payment processing. |
+| **Security** | jBCrypt | Salted password hashing for pharmacist accounts. |
+| **Image Handling** | Glide | Efficient memory management and lazy-loading of thumbnails. |
 
 ---
 
-## 📂 Key Code Modules & Design Patterns
-
-*   **Singleton Pattern**: Implemented in `CartManager.java` to ensure a single source of truth for the shopping cart.
-*   **Adapter Pattern**: Multiple `RecyclerView.Adapter` implementations (e.g., `InventoryAdapter`, `MyOrdersAdapter`) bridge complex Firestore data objects to UI components.
-*   **Model-View-Binding**: Extensive use of `ViewBinding` to ensure null-safe UI interaction and cleaner code.
-*   **POJO Modeling**: `Medicine.java`, `Order.java`, and `CartItem.java` define the schema for all database transactions.
-
----
-
-## 📝 Detailed Project Summary
+## 📝 Detailed Project Summary (For CV/Portfolio)
 
 **Medi** is a sophisticated healthcare and pharmacy management ecosystem designed to modernize the traditional medicine procurement process. By bridging the gap between patients and pharmacists, the application facilitates a seamless end-to-end digital workflow. Patients can utilize high-precision **AI-driven OCR** to scan physical prescriptions, which are automatically parsed and matched against a real-time, cross-pharmacy inventory powered by **Firebase Firestore**. To enhance the patient experience, the platform integrates **Generative AI (Google Gemini)**, providing a conversational interface for medical guidance, drug interaction checks, and health advice. 
 
-On the supply side, pharmacists are equipped with a robust dashboard to manage stock levels, update pricing, and fulfill orders through an event-driven notification system. The application's architecture emphasizes reliability and security, employing the **Singleton design pattern** for consistent state management across the shopping experience, **jBCrypt** for salted password hashing, and the **Razorpay SDK** for secure, encrypted financial transactions. This holistic approach ensures that Medi is not just a marketplace, but a high-performance healthcare companion that prioritizes speed, security, and intelligent automation.
+The application's architecture emphasizes reliability and security, employing the **Singleton design pattern** for consistent state management across the shopping experience, **jBCrypt** for salted password hashing, and the **Razorpay SDK** for secure, encrypted financial transactions. This holistic approach ensures that Medi is not just a marketplace, but a high-performance healthcare companion that prioritizes speed, security, and intelligent automation.
 
 ---
 
@@ -74,17 +88,15 @@ On the supply side, pharmacists are equipped with a robust dashboard to manage s
     ```
 2.  **Firebase Integration**:
     *   Place your `google-services.json` in the `app/` folder.
-    *   Enable **Authentication**, **Cloud Firestore**, and **Storage** in the Firebase Console.
+    *   Enable **Authentication**, **Cloud Firestore**, and **Storage**.
 3.  **API Key Configuration**:
     *   Add your **Razorpay Key** in `PaymentActivity.java`.
     *   Inject your **Gemini API Key** into the AI helper module.
-4.  **Build**:
-    *   Open in Android Studio Ladybug (or newer).
-    *   Gradle Sync & Run on API 24+.
+4.  **Build**: Open in Android Studio Ladybug (or newer), Sync Gradle, and Run.
 
 ---
 
 ## 🤝 Contributing
-Contributions are welcome! If you're looking to improve the AI matching algorithm or UI, please submit a Pull Request.
+Contributions are welcome! Please submit a Pull Request.
 
 **Developer**: [parzival787](https://github.com/parzival787)
