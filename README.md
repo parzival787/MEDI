@@ -10,6 +10,16 @@
 
 ---
 
+## 🌟 Key Features
+
+*   **AI Prescription Scanning**: High-precision text extraction from physical prescriptions using **Google ML Kit OCR**.
+*   **Generative AI Assistant**: Real-time medical insights and drug interaction analysis powered by **Google Gemini**.
+*   **Unified Inventory Search**: Simultaneous querying of multiple pharmacy stocks via **Firestore collectionGroup**.
+*   **Secure Transactions**: Fully encrypted payment processing with **Razorpay SDK** integration.
+*   **Role-Based Access**: Specialized dashboards for both Patients and Pharmacists with real-time sync.
+
+---
+
 ## 🏗 System Architecture
 
 The **Medi** ecosystem is built on a high-availability, cloud-synced architecture designed for real-time healthcare management.
@@ -41,10 +51,10 @@ graph TD
 *   **Data & Persistence Layer**:
     *   **Reactive Backend**: Uses **Cloud Firestore** for real-time data streaming (orders/inventory).
     *   **Blob Storage**: **Firebase Storage** manages high-resolution prescription images and medicine catalogs.
-    *   **State Management & Patterns**: 
-    *   **Singleton Pattern**: Implemented in `CartManager` to maintain a globally consistent state, preventing data loss during configuration changes (like screen rotation).
-    *   **Adapter Pattern**: Used extensively in `RecyclerViews` to decouple business logic from UI representation.
-    *   **POJO Modeling**: Strong type safety and data structure integrity through `Medicine`, `Order`, and `CartItem` models.
+    *   **State Management & Design Patterns**: 
+        *   **Singleton Pattern**: Implemented in `CartManager` to maintain a globally consistent state, preventing data loss during configuration changes.
+        *   **Adapter Pattern**: Used for `RecyclerViews` to decouple business logic from UI.
+        *   **POJO Modeling**: Strong type safety through `Medicine`, `Order`, and `CartItem` models.
 
 ---
 
@@ -71,7 +81,7 @@ graph TD
 | **AI/ML** | ML Kit & Gemini | OCR for prescriptions and GenAI for medical context. |
 | **Payments** | Razorpay | End-to-end encrypted payment processing. |
 | **Security** | jBCrypt | Salted password hashing for pharmacist accounts. |
-| **Version Control** | Git | Managed via GitHub for collaborative development and CI/CD readiness. |
+| **Version Control** | Git | Managed via GitHub for collaborative development. |
 | **Image Handling** | Glide | Efficient memory management and lazy-loading of thumbnails. |
 
 ---
