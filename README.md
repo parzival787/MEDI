@@ -1,116 +1,77 @@
-# 💊 Medi - Smart Pharmacy & Healthcare App
+# Medi — Android Pharmacy App
 
-[![Android](https://img.shields.io/badge/Platform-Android-brightgreen.svg)](https://developer.android.com)
-[![Java](https://img.shields.io/badge/Language-Java-orange.svg)](https://www.java.com)
-[![Firebase](https://img.shields.io/badge/Backend-Firebase-ffca28.svg)](https://firebase.google.com)
-[![ML Kit](https://img.shields.io/badge/AI-ML%20Kit-blue.svg)](https://developers.google.com/ml-kit)
-[![Gemini](https://img.shields.io/badge/AI-Gemini-blueviolet.svg)](https://deepmind.google/technologies/gemini/)
+Medi is an Android prototype connecting patients with pharmacies. Patients search available medicines or scan prescription text, build a cart, and use a Razorpay checkout flow. Pharmacists manage inventory and view incoming orders.
 
-**Medi** is a high-performance Android ecosystem that digitizes the pharmacy experience. It bridges the gap between healthcare providers and patients through AI-driven prescription parsing, Generative AI medical assistance, and a robust real-time supply chain management system.
+## Start here
 
----
+| Role | What to explore |
+| --- | --- |
+| Patient | Sign in, search medicines across pharmacies, scan a prescription image, add items to the cart, and view orders |
+| Pharmacist | Register a pharmacy profile, add or edit medicines, view inventory, and manage received orders |
 
-## 🌟 Key Features
+## Features in the code
 
-*   **AI Prescription Scanning**: High-precision text extraction from physical prescriptions using **Google ML Kit OCR**.
-*   **Generative AI Assistant**: Real-time medical insights and drug interaction analysis powered by **Google Gemini**.
-*   **Unified Inventory Search**: Simultaneous querying of multiple pharmacy stocks via **Firestore collectionGroup**.
-*   **Secure Transactions**: Fully encrypted payment processing with **Razorpay SDK** integration.
-*   **Role-Based Access**: Specialized dashboards for both Patients and Pharmacists with real-time sync.
+- Patient and pharmacist sign-in using Firebase Authentication.
+- Pharmacy profiles stored in Firestore.
+- Medicine search across pharmacy `my_inventory` subcollections.
+- Prescription-image text extraction using Google ML Kit OCR, followed by inventory lookup.
+- Shared cart state through `CartManager`.
+- Razorpay SDK checkout and client-side success/failure handling.
+- Firestore order and inventory workflows, with image handling through Firebase Storage/Glide.
 
----
+The project declares Gemini and jBCrypt dependencies, but the tracked Java application classes do not currently implement a Gemini assistant or jBCrypt password hashing. They are therefore not listed as completed features.
 
-## 🏗 System Architecture
+## Example workflow
 
-The **Medi** ecosystem is built on a high-availability, cloud-synced architecture designed for real-time healthcare management.
+1. A pharmacist creates a profile and adds medicines to inventory.
+2. A patient signs in and searches by medicine name or selects a prescription image.
+3. OCR extracts text; the app looks up matching names across pharmacy inventories.
+4. The patient opens medicine details, adds items to the cart, and enters checkout.
+5. Checkout callbacks lead to the order workflow, and the pharmacist can view received orders.
 
-### 1. Architectural Diagram (Logic Flow)
-```mermaid
-graph TD
-    A[User/Pharmacist Client] -->|Auth Request| B{Firebase Auth}
-    B -->|Success| C[MainActivity Router]
-    C -->|Role: Patient| D[Patient Dashboard]
-    C -->|Role: Pharmacist| E[Pharmacist Dashboard]
-    
-    D -->|Upload Prescription| F[ML Kit OCR Engine]
-    F -->|Regex Filtering| G[Firestore collectionGroup Search]
-    G -->|Results| H[Medicine Details + Gemini AI Insights]
-    
-    H -->|Add to Cart| I[Singleton CartManager]
-    I -->|Checkout| J[Razorpay Payment Gateway]
-    J -->|Verified| K[Firestore Orders Collection]
-    
-    K -->|Real-time Snapshot| E
+Prescription OCR depends on image quality and the matching text; it is not a clinical interpretation of a prescription.
+
+## Technology
+
+| Part | Technology |
+| --- | --- |
+| Language | Java, with Java 11 source compatibility |
+| Android UI | XML layouts, Material components, RecyclerView, ViewBinding |
+| Identity and data | Firebase Authentication and Cloud Firestore |
+| Images | Firebase Storage and Glide |
+| OCR | Google ML Kit Text Recognition |
+| Checkout | Razorpay Android SDK |
+| Android requirements | Compile/target SDK 36; minimum API 24 |
+
+## Setup
+
+```sh
+git clone https://github.com/parzival787/MEDI.git
+cd MEDI
 ```
 
-### 2. Layered Breakdown
-*   **Presentation Layer**: Built with **Material Design 3** and **ViewBinding**. It utilizes a responsive Activity-based navigation system to ensure smooth transitions between complex tasks like OCR scanning and payment processing.
-*   **Intelligence Layer (AI/ML)**: 
-    *   **ML Kit Engine**: Handles edge-based text recognition to minimize latency.
-    *   **Gemini AI Bridge**: Provides Generative AI context for drug interactions, acting as a virtual pharmacist for patients.
-*   **Data & Persistence Layer**:
-    *   **Reactive Backend**: Uses **Cloud Firestore** for real-time data streaming (orders/inventory).
-    *   **Blob Storage**: **Firebase Storage** manages high-resolution prescription images and medicine catalogs.
-    *   **State Management & Design Patterns**: 
-        *   **Singleton Pattern**: Implemented in `CartManager` to maintain a globally consistent state, preventing data loss during configuration changes.
-        *   **Adapter Pattern**: Used for `RecyclerViews` to decouple business logic from UI.
-        *   **POJO Modeling**: Strong type safety through `Medicine`, `Order`, and `CartItem` models.
+1. Open the project in Android Studio and install Android SDK 36.
+2. Create your own Firebase Android app using package `com.example.medi`.
+3. Add its configuration to `app/google-services.json`. Configure Authentication, Firestore, and Storage.
+4. Configure a Razorpay **test-mode key ID** in [PaymentActivity.java](app/src/main/java/com/example/medi/PaymentActivity.java) for a checkout demonstration. A payment key secret must not be embedded in an Android client.
+5. Sync Gradle and run the `app` module on an API 24+ device or emulator.
+6. Add sample inventory using a pharmacy account, then test search and ordering with a patient account.
 
----
+The application uses Firestore collection-group queries on `my_inventory`; create any indexes requested by Firestore while running those queries.
 
-## 🔄 Technical Workflow & System Logic
+## Repository map
 
-### 1. Patient Procurement Workflow
-1.  **Identity Verification**: `UserSignin.java` handles session persistence via Firebase Auth. Google One-Tap integration is implemented for low-friction onboarding.
-2.  **Smart Prescription Analysis**: The image is processed via `Google ML Kit TextRecognizer`. Raw blocks of text are extracted, filtered via Regex (`[a-zA-Z]{4,}`), and queried against Firestore `collectionGroup` to find matches across all pharmacies simultaneously.
-3.  **GenAI Assistance**: Integrated with the **Google Gemini API**, providing a chatbot-like interface where patients can query drug interactions, side effects, and general health advice.
-4.  **Transaction Lifecycle**: Integrates **Razorpay SDK**. The workflow handles the `PaymentResultListener` callbacks; upon success, the cart is flushed and a new `Order` document is atomized into the database.
+- [UserSignin.java](app/src/main/java/com/example/medi/UserSignin.java) and [PharmacySignin.java](app/src/main/java/com/example/medi/PharmacySignin.java): account workflows.
+- [UserActivity.java](app/src/main/java/com/example/medi/UserActivity.java): medicine search.
+- [Uploadprescription.java](app/src/main/java/com/example/medi/Uploadprescription.java): image selection, OCR, and inventory lookup.
+- [CartManager.java](app/src/main/java/com/example/medi/CartManager.java) and [CartActivity.java](app/src/main/java/com/example/medi/CartActivity.java): cart model and screen.
+- [PaymentActivity.java](app/src/main/java/com/example/medi/PaymentActivity.java): Razorpay checkout and order handling.
+- [PharmacistActivity.java](app/src/main/java/com/example/medi/PharmacistActivity.java): pharmacy dashboard.
+- [OrdersReceivedActivity.java](app/src/main/java/com/example/medi/OrdersReceivedActivity.java): received orders.
+- [app/build.gradle.kts](app/build.gradle.kts): build configuration and dependencies.
 
-### 2. Supply Chain & Fulfillment (Pharmacist Logic)
-1.  **Inventory Management**: `addmedicine.java` handles binary data upload (images) to **Firebase Storage** and metadata (price, dosage) to **Firestore**.
-2.  **Real-Time Dashboard**: `OrdersReceivedActivity` uses a `SnapshotListener`. When a customer places an order, the pharmacist's UI updates instantly without requiring a refresh.
+## Prototype boundaries
 
----
+A successful client callback is not a substitute for server-side payment verification. The repository does not include a separate payment-verification backend. Configure Firebase access rules, validate checkout behavior, and review inventory/order consistency before using the app with real customers or payments.
 
-## 🛠 Tech Stack Implementation Details
-
-| Component | Technology | Implementation Detail |
-| :--- | :--- | :--- |
-| **Language** | Java 11 | Utilizes modern Java features like Lambda expressions and Stream APIs. |
-| **Backend** | Firebase | Firestore (DB), Auth (Identity), Storage (Images). |
-| **AI/ML** | ML Kit & Gemini | OCR for prescriptions and GenAI for medical context. |
-| **Payments** | Razorpay | End-to-end encrypted payment processing. |
-| **Security** | jBCrypt | Salted password hashing for pharmacist accounts. |
-| **Version Control** | Git | Managed via GitHub for collaborative development. |
-| **Image Handling** | Glide | Efficient memory management and lazy-loading of thumbnails. |
-
----
-
-## 📝 Detailed Project Summary (For CV/Portfolio)
-
-**Medi** is a sophisticated healthcare and pharmacy management ecosystem designed to modernize the traditional medicine procurement process. By bridging the gap between patients and pharmacists, the application facilitates a seamless end-to-end digital workflow. Patients can utilize high-precision **AI-driven OCR** to scan physical prescriptions, which are automatically parsed and matched against a real-time, cross-pharmacy inventory powered by **Firebase Firestore**. To enhance the patient experience, the platform integrates **Generative AI (Google Gemini)**, providing a conversational interface for medical guidance, drug interaction checks, and health advice. 
-
-The application's architecture emphasizes reliability and security, employing the **Singleton design pattern** for consistent state management across the shopping experience, **jBCrypt** for salted password hashing, and the **Razorpay SDK** for secure, encrypted financial transactions. This holistic approach ensures that Medi is not just a marketplace, but a high-performance healthcare companion that prioritizes speed, security, and intelligent automation.
-
----
-
-## 🚀 Setup & Installation
-
-1.  **Clone the Repository**:
-    ```bash
-    git clone https://github.com/parzival787/MEDI.git
-    ```
-2.  **Firebase Integration**:
-    *   Place your `google-services.json` in the `app/` folder.
-    *   Enable **Authentication**, **Cloud Firestore**, and **Storage**.
-3.  **API Key Configuration**:
-    *   Add your **Razorpay Key** in `PaymentActivity.java`.
-    *   Inject your **Gemini API Key** into the AI helper module.
-4.  **Build**: Open in Android Studio Ladybug (or newer), Sync Gradle, and Run.
-
----
-
-## 🤝 Contributing
-Contributions are welcome! Please submit a Pull Request.
-
-**Developer**: [parzival787](https://github.com/parzival787)
+This documentation describes the tracked implementation; it does not claim measured performance, clinical accuracy, or production readiness.
