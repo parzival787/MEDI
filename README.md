@@ -59,6 +59,31 @@ cd MEDI
 
 The application uses Firestore collection-group queries on `my_inventory`; create any indexes requested by Firestore while running those queries.
 
+## Build and test
+
+This is a native Android Gradle project. The root npm dependencies do not provide a React Native app or an `npm start` workflow.
+
+The wrapper uses Gradle 9.3.1 with a JDK 21 daemon configuration; the Java 11 setting describes source compatibility. After completing Firebase and SDK setup, run from the repository root:
+
+```powershell
+.\gradlew.bat :app:assembleDebug
+.\gradlew.bat :app:testDebugUnitTest
+.\gradlew.bat :app:connectedDebugAndroidTest
+```
+
+Use `bash ./gradlew` on macOS/Linux. Connected tests require a device/emulator. Find the debug APK in `app/build/outputs/apk/debug/`. These commands do not by themselves establish that OCR, payment callbacks or order writes work against your services.
+
+## Data and verification
+
+| Data | Location |
+| --- | --- |
+| Patient profiles and orders | Firestore `users/{uid}` and its `orders` subcollection |
+| Pharmacy inventory | Firestore `pharmacists/{uid}/my_inventory` |
+| Received pharmacy orders | Firestore `pharmacists/{uid}/ordersReceived` |
+| Current cart | In-memory `CartManager` singleton; not durable across process termination |
+
+Use separate patient and pharmacist test accounts. Add a medicine, find it by name, try a clear prescription image, and compare the cart total with test checkout. After a successful test callback, inspect both the patient's order and the pharmacy's received order. Also try cancellation and an empty cart. Use Razorpay test mode throughout.
+
 ## Repository map
 
 - [UserSignin.java](app/src/main/java/com/example/medi/UserSignin.java) and [PharmacySignin.java](app/src/main/java/com/example/medi/PharmacySignin.java): account workflows.
